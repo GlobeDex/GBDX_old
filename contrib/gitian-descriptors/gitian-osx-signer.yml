@@ -2,16 +2,16 @@
 name: "globedex-dmg-signer"
 distro: "ubuntu"
 suites:
-- "bionic"
+  - "bionic"
 architectures:
-- "amd64"
+  - "amd64"
 packages:
-- "faketime"
+  - "faketime"
 remotes:
-- "url": "https://github.com/globedex-project/globedex-detached-sigs.git"
-  "dir": "signature"
+  - "url": "https://github.com/GlobeDex/globedex-detached-sigs.git"
+    "dir": "signature"
 files:
-- "globedex-osx-unsigned.tar.gz"
+  - "globedex-osx-unsigned.tar.gz"
 script: |
   set -e -o pipefail
 
