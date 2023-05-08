@@ -1,0 +1,8 @@
+/usr/bin/globedex-cli		--	gen_context(system_u:object_r:globedex_exec_t,s0)
+/usr/sbin/globedexd		--	gen_context(system_u:object_r:globedex_exec_t,s0)
+/usr/lib(64)?/globedex/globedexd		--	gen_context(system_u:object_r:globedex_exec_t,s0)
+
+/etc/globedex(/.*)?		gen_context(system_u:object_r:globedex_conf_t,s0)
+/var/lib/globedex(/.*)?		gen_context(system_u:object_r:globedex_var_lib_t,s0)
+
+(/var)?/run/globedexd(/.*)?   gen_context(system_u:object_r:globedex_var_run_t,s0)

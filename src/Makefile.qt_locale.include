@@ -1,0 +1,15 @@
+QT_TS = \
+  qt/locale/globedex_de.ts \
+  qt/locale/globedex_en.ts \
+  qt/locale/globedex_en_US.ts \
+  qt/locale/globedex_es.ts \
+  qt/locale/globedex_es_ES.ts \
+  qt/locale/globedex_fr_FR.ts \
+  qt/locale/globedex_hr_HR.ts \
+  qt/locale/globedex_it.ts \
+  qt/locale/globedex_ko_KR.ts \
+  qt/locale/globedex_nl.ts \
+  qt/locale/globedex_pl.ts \
+  qt/locale/globedex_ru.ts \
+  qt/locale/globedex_tr.ts \
+  qt/locale/globedex_zh_CN.ts

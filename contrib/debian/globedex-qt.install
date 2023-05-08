@@ -1,0 +1,6 @@
+usr/local/bin/globedex-qt usr/bin
+share/pixmaps/globedex32.xpm usr/share/pixmaps
+share/pixmaps/globedex16.xpm usr/share/pixmaps
+share/pixmaps/globedex128.png usr/share/pixmaps
+debian/globedex-qt.desktop usr/share/applications
+debian/globedex-qt.protocol usr/share/kde4/services/

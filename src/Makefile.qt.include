@@ -1,0 +1,701 @@
+# Copyright (c) 2013-2016 The Bitcoin Core developers
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+bin_PROGRAMS += qt/globedex-qt
+EXTRA_LIBRARIES += qt/libbitcoinqt.a
+
+# globedex qt core #
+include Makefile.qt_locale.include
+
+QT_FORMS_UI = \
+  qt/forms/addressbookpage.ui \
+  qt/forms/askpassphrasedialog.ui \
+  qt/forms/coincontroldialog.ui \
+  qt/forms/editaddressdialog.ui \
+  qt/forms/helpmessagedialog.ui \
+  qt/forms/intro.ui \
+  qt/forms/openuridialog.ui \
+  qt/forms/optionsdialog.ui \
+  qt/forms/rpcconsole.ui \
+  qt/globedex/forms/loadingdialog.ui \
+  qt/globedex/forms/snackbar.ui \
+  qt/globedex/forms/navmenuwidget.ui \
+  qt/globedex/forms/lockunlock.ui \
+  qt/globedex/forms/expandablebutton.ui \
+  qt/globedex/forms/receivedialog.ui \
+  qt/globedex/forms/topbar.ui \
+  qt/globedex/forms/txrow.ui \
+  qt/globedex/forms/dashboardwidget.ui \
+  qt/globedex/forms/addresslabelrow.ui \
+  qt/globedex/forms/contactdropdownrow.ui \
+  qt/globedex/forms/mninfodialog.ui \
+  qt/globedex/forms/optionbutton.ui \
+  qt/globedex/forms/masternodewizarddialog.ui \
+  qt/globedex/forms/mnrow.ui \
+  qt/globedex/forms/masternodeswidget.ui \
+  qt/globedex/forms/myaddressrow.ui \
+  qt/globedex/forms/sendchangeaddressdialog.ui \
+  qt/globedex/forms/sendconfirmdialog.ui \
+  qt/globedex/forms/sendcustomfeedialog.ui \
+  qt/globedex/forms/sendchangeaddressdialog.ui \
+  qt/globedex/forms/sendmultirow.ui \
+  qt/globedex/forms/send.ui \
+  qt/globedex/forms/addnewaddressdialog.ui \
+  qt/globedex/forms/addnewcontactdialog.ui \
+  qt/globedex/forms/requestdialog.ui \
+  qt/globedex/forms/receivewidget.ui \
+  qt/globedex/forms/tooltipmenu.ui \
+  qt/globedex/forms/addresseswidget.ui \
+  qt/globedex/forms/defaultdialog.ui \
+  qt/globedex/settings/forms/settingsbackupwallet.ui \
+  qt/globedex/settings/forms/settingsexportcsv.ui \
+  qt/globedex/settings/forms/settingsbittoolwidget.ui \
+  qt/globedex/settings/forms/settingsconsolewidget.ui \
+  qt/globedex/settings/forms/settingsdisplayoptionswidget.ui \
+  qt/globedex/settings/forms/settingsfaqwidget.ui \
+  qt/globedex/settings/forms/settingsinformationwidget.ui \
+  qt/globedex/settings/forms/settingsmainoptionswidget.ui \
+  qt/globedex/settings/forms/settingsmultisenddialog.ui \
+  qt/globedex/settings/forms/settingsmultisendwidget.ui \
+  qt/globedex/settings/forms/settingssignmessagewidgets.ui \
+  qt/globedex/settings/forms/settingswalletoptionswidget.ui \
+  qt/globedex/settings/forms/settingswalletrepairwidget.ui \
+  qt/globedex/settings/forms/settingswidget.ui \
+  qt/globedex/forms/welcomecontentwidget.ui \
+  qt/globedex/forms/splash.ui
+
+QT_MOC_CPP = \
+  qt/moc_addressbookpage.cpp \
+  qt/moc_addresstablemodel.cpp \
+  qt/moc_askpassphrasedialog.cpp \
+  qt/moc_bantablemodel.cpp \
+  qt/moc_bitcoinaddressvalidator.cpp \
+  qt/globedex/moc_globedexgui.cpp \
+  qt/moc_bitcoinunits.cpp \
+  qt/moc_clientmodel.cpp \
+  qt/moc_coincontroldialog.cpp \
+  qt/moc_coincontroltreewidget.cpp \
+  qt/moc_csvmodelwriter.cpp \
+  qt/moc_editaddressdialog.cpp \
+  qt/moc_guiutil.cpp \
+  qt/moc_intro.cpp \
+  qt/moc_macdockiconhandler.cpp \
+  qt/moc_macnotificationhandler.cpp \
+  qt/moc_notificator.cpp \
+  qt/moc_openuridialog.cpp \
+  qt/moc_optionsdialog.cpp \
+  qt/moc_optionsmodel.cpp \
+  qt/moc_peertablemodel.cpp \
+  qt/moc_paymentserver.cpp \
+  qt/moc_qvalidatedlineedit.cpp \
+  qt/moc_qvaluecombobox.cpp \
+  qt/moc_recentrequeststablemodel.cpp \
+  qt/moc_rpcconsole.cpp \
+  qt/moc_trafficgraphwidget.cpp \
+  qt/moc_transactionfilterproxy.cpp \
+  qt/moc_transactiontablemodel.cpp \
+  qt/moc_utilitydialog.cpp \
+  qt/moc_walletmodel.cpp \
+  qt/globedex/moc_loadingdialog.cpp \
+  qt/globedex/moc_pwidget.cpp \
+  qt/globedex/moc_focuseddialog.cpp \
+  qt/globedex/moc_snackbar.cpp \
+  qt/globedex/moc_navmenuwidget.cpp \
+  qt/globedex/moc_lockunlock.cpp \
+  qt/globedex/moc_expandablebutton.cpp \
+  qt/globedex/moc_privatelabel.cpp \
+  qt/globedex/moc_furabstractlistitemdelegate.cpp \
+  qt/globedex/moc_receivedialog.cpp \
+  qt/globedex/moc_pfborderimage.cpp \
+  qt/globedex/moc_topbar.cpp \
+  qt/globedex/moc_txrow.cpp \
+  qt/globedex/moc_dashboardwidget.cpp \
+  qt/globedex/moc_addresslabelrow.cpp \
+  qt/globedex/moc_contactdropdownrow.cpp \
+  qt/globedex/moc_mninfodialog.cpp \
+  qt/globedex/moc_optionbutton.cpp \
+  qt/globedex/moc_mnmodel.cpp \
+  qt/globedex/moc_masternodewizarddialog.cpp \
+  qt/globedex/moc_mnrow.cpp \
+  qt/globedex/moc_masternodeswidget.cpp \
+  qt/globedex/moc_myaddressrow.cpp \
+  qt/globedex/moc_contactsdropdown.cpp \
+  qt/globedex/moc_sendchangeaddressdialog.cpp \
+  qt/globedex/moc_sendconfirmdialog.cpp \
+  qt/globedex/moc_sendcustomfeedialog.cpp \
+  qt/globedex/moc_sendchangeaddressdialog.cpp \
+  qt/globedex/moc_sendmultirow.cpp \
+  qt/globedex/moc_send.cpp \
+  qt/globedex/moc_addnewaddressdialog.cpp \
+  qt/globedex/moc_addnewcontactdialog.cpp \
+  qt/globedex/moc_requestdialog.cpp \
+  qt/globedex/moc_receivewidget.cpp \
+  qt/globedex/moc_tooltipmenu.cpp \
+  qt/globedex/moc_addresseswidget.cpp \
+  qt/globedex/moc_defaultdialog.cpp \
+  qt/globedex/settings/moc_settingsbackupwallet.cpp \
+  qt/globedex/settings/moc_settingsexportcsv.cpp \
+  qt/globedex/settings/moc_settingsbittoolwidget.cpp \
+  qt/globedex/settings/moc_settingsconsolewidget.cpp \
+  qt/globedex/settings/moc_settingsdisplayoptionswidget.cpp \
+  qt/globedex/settings/moc_settingsfaqwidget.cpp \
+  qt/globedex/settings/moc_settingsinformationwidget.cpp \
+  qt/globedex/settings/moc_settingsmainoptionswidget.cpp \
+  qt/globedex/settings/moc_settingsmultisenddialog.cpp \
+  qt/globedex/settings/moc_settingsmultisendwidget.cpp \
+  qt/globedex/settings/moc_settingssignmessagewidgets.cpp \
+  qt/globedex/settings/moc_settingswalletoptionswidget.cpp \
+  qt/globedex/settings/moc_settingswalletrepairwidget.cpp \
+  qt/globedex/settings/moc_settingswidget.cpp \
+  qt/globedex/moc_welcomecontentwidget.cpp \
+  qt/globedex/moc_splash.cpp
+
+BITCOIN_MM = \
+  qt/macdockiconhandler.mm \
+  qt/macnotificationhandler.mm
+
+QT_MOC = \
+  qt/globedex.moc \
+  qt/intro.moc \
+  qt/rpcconsole.moc \
+  qt/globedex/settings/moc_settingsconsolewidget.cpp
+
+QT_QRC_CPP = qt/qrc_globedex.cpp
+QT_QRC = qt/globedex.qrc
+QT_QRC_LOCALE_CPP = qt/qrc_globedex_locale.cpp
+QT_QRC_LOCALE = qt/globedex_locale.qrc
+
+PROTOBUF_CC = qt/paymentrequest.pb.cc
+PROTOBUF_H = qt/paymentrequest.pb.h
+PROTOBUF_PROTO = qt/paymentrequest.proto
+
+BITCOIN_QT_H = \
+  qt/addressbookpage.h \
+  qt/addresstablemodel.h \
+  qt/askpassphrasedialog.h \
+  qt/bantablemodel.h \
+  qt/bitcoinaddressvalidator.h \
+  qt/globedex/globedexgui.h \
+  qt/bitcoinunits.h \
+  qt/clientmodel.h \
+  qt/coincontroldialog.h \
+  qt/coincontroltreewidget.h \
+  qt/csvmodelwriter.h \
+  qt/editaddressdialog.h \
+  qt/guiconstants.h \
+  qt/guiutil.h \
+  qt/intro.h \
+  qt/macdockiconhandler.h \
+  qt/macnotificationhandler.h \
+  qt/networkstyle.h \
+  qt/notificator.h \
+  qt/openuridialog.h \
+  qt/optionsdialog.h \
+  qt/optionsmodel.h \
+  qt/paymentrequestplus.h \
+  qt/paymentserver.h \
+  qt/peertablemodel.h \
+  qt/platformstyle.h \
+  qt/qvalidatedlineedit.h \
+  qt/qvaluecombobox.h \
+  qt/recentrequeststablemodel.h \
+  qt/rpcconsole.h \
+  qt/trafficgraphwidget.h \
+  qt/transactionfilterproxy.h \
+  qt/transactionrecord.h \
+  qt/transactiontablemodel.h \
+  qt/utilitydialog.h \
+  qt/walletmodel.h \
+  qt/walletmodeltransaction.h \
+  qt/globedex/prunnable.h \
+  qt/globedex/pfborderimage.h \
+  qt/globedex/loadingdialog.h \
+  qt/winshutdownmonitor.h \
+  qt/globedex/pwidget.h \
+  qt/globedex/focuseddialog.h \
+  qt/globedex/guitransactionsutils.h \
+  qt/globedex/snackbar.h \
+  qt/globedex/navmenuwidget.h \
+  qt/globedex/lockunlock.h \
+  qt/globedex/receivedialog.h \
+  qt/globedex/furlistrow.h \
+  qt/globedex/furabstractlistitemdelegate.h \
+  qt/globedex/txviewholder.h \
+  qt/globedex/qtutils.h \
+  qt/globedex/expandablebutton.h \
+  qt/globedex/privatelabel.h \
+  qt/globedex/topbar.h \
+  qt/globedex/txrow.h \
+  qt/globedex/addressholder.h \
+  qt/globedex/addressfilterproxymodel.h \
+  qt/globedex/dashboardwidget.h \
+  qt/globedex/addresslabelrow.h \
+  qt/globedex/contactdropdownrow.h \
+  qt/globedex/mninfodialog.h \
+  qt/globedex/optionbutton.h \
+  qt/globedex/mnmodel.h \
+  qt/globedex/masternodewizarddialog.h \
+  qt/globedex/mnrow.h \
+  qt/globedex/masternodeswidget.h \
+  qt/globedex/myaddressrow.h \
+  qt/globedex/contactsdropdown.h \
+  qt/globedex/sendchangeaddressdialog.h \
+  qt/globedex/sendconfirmdialog.h \
+  qt/globedex/sendcustomfeedialog.h \
+  qt/globedex/sendchangeaddressdialog.h \
+  qt/globedex/sendmultirow.h \
+  qt/globedex/send.h \
+  qt/globedex/addnewaddressdialog.h \
+  qt/globedex/addnewcontactdialog.h \
+  qt/globedex/requestdialog.h \
+  qt/globedex/receivewidget.h \
+  qt/globedex/tooltipmenu.h \
+  qt/globedex/addresseswidget.h \
+  qt/globedex/defaultdialog.h \
+  qt/globedex/settings/settingsbackupwallet.h \
+  qt/globedex/settings/settingsexportcsv.h \
+  qt/globedex/settings/settingsbittoolwidget.h \
+  qt/globedex/settings/settingsconsolewidget.h \
+  qt/globedex/settings/settingsdisplayoptionswidget.h \
+  qt/globedex/settings/settingsfaqwidget.h \
+  qt/globedex/settings/settingsinformationwidget.h \
+  qt/globedex/settings/settingsmainoptionswidget.h \
+  qt/globedex/settings/settingsmultisenddialog.h \
+  qt/globedex/settings/settingsmultisendwidget.h \
+  qt/globedex/settings/settingssignmessagewidgets.h \
+  qt/globedex/settings/settingswalletoptionswidget.h \
+  qt/globedex/settings/settingswalletrepairwidget.h \
+  qt/globedex/settings/settingswidget.h \
+  qt/globedex/welcomecontentwidget.h \
+  qt/globedex/splash.h
+
+RES_ICONS = \
+  qt/res/icons/bitcoin.ico \
+  qt/res/icons/bitcoin.png \
+  qt/res/icons/bitcoin_testnet.ico \
+  qt/res/icons/bitcoin_testnet.png \
+  qt/res/icons/bitcoin_regtest.png \
+  qt/res/icons/lock_closed.png \
+  qt/res/icons/lock_open.png \
+  qt/res/icons/overview.png \
+  qt/res/icons/ic-transaction-received.svg \
+  qt/res/icons/ic-transaction-mint.svg \
+  qt/res/icons/ic-transaction-sent.svg \
+  qt/res/icons/ic-transaction-staked.svg \
+  qt/globedex/res/img/bg-dashboard-banner.png \
+  qt/globedex/res/img/bg-multi-number-dark.svg \
+  qt/globedex/res/img/ic-check-locked.svg \
+  qt/globedex/res/img/ic-check-console.svg \
+  qt/globedex/res/img/ic-nav-address.svg \
+  qt/globedex/res/img/ic-update.svg \
+  qt/globedex/res/img/bg-multi-number.svg \
+  qt/globedex/res/img/ic-check-mint-off.svg \
+  qt/globedex/res/img/ic-nav-dashboard-active.svg \
+  qt/globedex/res/img/ic-wallet-status-locked.svg \
+  qt/globedex/res/img/bg-splash.svg \
+  qt/globedex/res/img/bg-splash.png \
+  qt/globedex/res/img/ic-check-mint.svg \
+  qt/globedex/res/img/ic-nav-dashboard-hover.svg \
+  qt/globedex/res/img/ic-wallet-status-staking.svg \
+  qt/globedex/res/img/ic-check-peers-off.svg \
+  qt/globedex/res/img/ic-nav-dashboard.svg \
+  qt/globedex/res/img/ic-wallet-status-unlocked.svg \
+  qt/globedex/res/img/ic-check-peers.svg \
+  qt/globedex/res/img/ic-nav-master-active.svg \
+  qt/globedex/res/img/ic-watch-password-white.svg \
+  qt/globedex/res/img/bg-welcome-container.jpg \
+  qt/globedex/res/img/bg-welcome-container.png \
+  qt/globedex/res/img/bg-welcome-container.svg \
+  qt/globedex/res/img/bg-welcome-container@2x.png \
+  qt/globedex/res/img/bg-welcome-container@3x.png \
+  qt/globedex/res/img/ic-check-staking-off.svg \
+  qt/globedex/res/img/ic-nav-master-hover.svg \
+  qt/globedex/res/img/ic-watch-password.svg \
+  qt/globedex/res/img/bg-welcome.jpg \
+  qt/globedex/res/img/bg-welcome.svg \
+  qt/globedex/res/img/bg-welcome@2x.jpg \
+  qt/globedex/res/img/bg-welcome@3x.jpg \
+  qt/globedex/res/img/bg-welcome.png \
+  qt/globedex/res/img/ic-check-staking.svg \
+  qt/globedex/res/img/ic-nav-master.svg \
+  qt/globedex/res/img/img-dashboard-banner.jpg \
+  qt/globedex/res/img/btn-radio-active.svg \
+  qt/globedex/res/img/ic-check-mn-conf.svg \
+  qt/globedex/res/img/ic-check-coin-conf.svg \
+  qt/globedex/res/img/ic-check-sync-off.svg \
+  qt/globedex/res/img/ic-nav-privacy-active.svg \
+  qt/globedex/res/img/img-empty-contacts.svg \
+  qt/globedex/res/img/btn-radio-off.svg \
+  qt/globedex/res/img/ic-check-sync.png \
+  qt/globedex/res/img/ic-nav-privacy-hover.svg \
+  qt/globedex/res/img/img-empty-dark-contacts.svg \
+  qt/globedex/res/img/ic-contact-arrow-down.svg \
+  qt/globedex/res/img/ic-contact-arrow-down-white.svg \
+  qt/globedex/res/img/ic-check-sync.svg \
+  qt/globedex/res/img/ic-check-faq.svg \
+  qt/globedex/res/img/ic-check-privacy.svg \
+  qt/globedex/res/img/ic-check-privacy-off.svg \
+  qt/globedex/res/img/ic-nav-privacy.svg \
+  qt/globedex/res/img/img-empty-dark-error.svg \
+  qt/globedex/res/img/ic-add-label.svg \
+  qt/globedex/res/img/ic-pending.svg \
+  qt/globedex/res/img/ic-check-theme-dark.svg \
+  qt/globedex/res/img/ic-nav-receive-active.svg \
+  qt/globedex/res/img/img-empty-dark-masternode.svg \
+  qt/globedex/res/img/ic-add-liliac.svg \
+  qt/globedex/res/img/ic-check-theme-light.svg \
+  qt/globedex/res/img/ic-nav-receive-hover.svg \
+  qt/globedex/res/img/img-empty-dark-multisend.svg \
+  qt/globedex/res/img/ic-add-purple.svg \
+  qt/globedex/res/img/ic-check-white.svg \
+  qt/globedex/res/img/ic-nav-receive.svg \
+  qt/globedex/res/img/img-empty-dark-peers.svg \
+  qt/globedex/res/img/ic-add.svg \
+  qt/globedex/res/img/ic-check.svg \
+  qt/globedex/res/img/ic-nav-send-active.svg \
+  qt/globedex/res/img/img-empty-dark-staking-off.svg \
+  qt/globedex/res/img/img-empty-dark-staking-on.svg \
+  qt/globedex/res/img/ic-address-book-grey.svg \
+  qt/globedex/res/img/ic-chevron-left.svg \
+  qt/globedex/res/img/ic-nav-send-hover.svg \
+  qt/globedex/res/img/img-empty-dark-transactions.svg \
+  qt/globedex/res/img/ic-address-book-white.svg \
+  qt/globedex/res/img/ic-chevron-right.svg \
+  qt/globedex/res/img/ic-nav-send.svg \
+  qt/globedex/res/img/img-empty-error.svg \
+  qt/globedex/res/img/ic-address-book.svg \
+  qt/globedex/res/img/ic-clear-liliac.svg \
+  qt/globedex/res/img/ic-nav-settings-active.svg \
+  qt/globedex/res/img/img-empty-masternode.svg \
+  qt/globedex/res/img/ic-address-send-white.svg \
+  qt/globedex/res/img/ic-clear-purple.svg \
+  qt/globedex/res/img/ic-nav-settings-hover.svg \
+  qt/globedex/res/img/img-empty-multisend.svg \
+  qt/globedex/res/img/ic-address-send.svg \
+  qt/globedex/res/img/ic-close-white.svg \
+  qt/globedex/res/img/ic-nav-settings.svg \
+  qt/globedex/res/img/img-empty-peers.svg \
+  qt/globedex/res/img/img-empty-privacy.svg \
+  qt/globedex/res/img/img-empty-privacy-dark.svg \
+  qt/globedex/res/img/ic-arrow-drop-down-white.svg \
+  qt/globedex/res/img/ic-close.svg \
+  qt/globedex/res/img/ic-radio-liliac-on.svg \
+  qt/globedex/res/img/img-empty-staking-off.svg \
+  qt/globedex/res/img/ic-arrow-drop-down.svg \
+  qt/globedex/res/img/ic-coin-piv.svg \
+  qt/globedex/res/img/ic-receive-off.svg \
+  qt/globedex/res/img/img-empty-staking-on.svg \
+  qt/globedex/res/img/ic-arrow-drop-up-white.svg \
+  qt/globedex/res/img/ic-receive-on.svg \
+  qt/globedex/res/img/img-empty-transactions.svg \
+  qt/globedex/res/img/ic-arrow-drop-up.svg \
+  qt/globedex/res/img/ic-received.svg \
+  qt/globedex/res/img/img-logo-globedex.png \
+  qt/globedex/res/img/ic-arrow-drop-white-down.svg \
+  qt/globedex/res/img/ic-combo-box.svg \
+  qt/globedex/res/img/ic-send.svg \
+  qt/globedex/res/img/img-logo-globedex@2x.png \
+  qt/globedex/res/img/ic-arrow-purple-down.svg \
+  qt/globedex/res/img/ic-connect.svg \
+  qt/globedex/res/img/ic-submenu-lock.svg \
+  qt/globedex/res/img/img-logo-globedex@3x.png \
+  qt/globedex/res/img/img-logo-globedex.svg \
+  qt/globedex/res/img/ic-arrow-right-white.svg \
+  qt/globedex/res/img/ic-arrow-left-white.svg \
+  qt/globedex/res/img/ic-arrow-left.svg \
+  qt/globedex/res/img/ic-copy-liliac.svg \
+  qt/globedex/res/img/ic-submenu-staking.svg \
+  qt/globedex/res/img/img-nav-logo-globedex.png \
+  qt/globedex/res/img/ic-arrow-right.svg \
+  qt/globedex/res/img/ic-copy.svg \
+  qt/globedex/res/img/ic-copy-big.svg \
+  qt/globedex/res/img/ic-copy-big-white.svg \
+  qt/globedex/res/img/ic-submenu-unlock.svg \
+  qt/globedex/res/img/img-nav-logo.png \
+  qt/globedex/res/img/ic-arrow-white-left.svg \
+  qt/globedex/res/img/ic-exit.svg \
+  qt/globedex/res/img/ic-switch-liliac-on.svg \
+  qt/globedex/res/img/img-nav-logo.svg \
+  qt/globedex/res/img/ic-arrow-white-right.svg \
+  qt/globedex/res/img/ic-expand.svg \
+  qt/globedex/res/img/ic-switch-off.svg \
+  qt/globedex/res/img/img-qr-test-big.png \
+  qt/globedex/res/img/ic-check-active.svg \
+  qt/globedex/res/img/ic-folder.svg \
+  qt/globedex/res/img/ic-switch-on.svg \
+  qt/globedex/res/img/img-qr-test.png \
+  qt/globedex/res/img/ic-check-box.svg \
+  qt/globedex/res/img/ic-check-box-dark-active.svg \
+  qt/globedex/res/img/ic-check-box-indeterminate.svg \
+  qt/globedex/res/img/ic-check-box-liliac-indeterminate.svg \
+  qt/globedex/res/img/ic-label-liliac.svg \
+  qt/globedex/res/img/ic-transaction-warning.svg \
+  qt/globedex/res/img/ic-transaction-mint.svg \
+  qt/globedex/res/img/ic-transaction-mint-inactive.svg \
+  qt/globedex/res/img/img-qr.svg \
+  qt/globedex/res/img/ic-check-connect-off.svg \
+  qt/globedex/res/img/ic-check-tor-off.svg \
+  qt/globedex/res/img/ic-check-tor.svg \
+  qt/globedex/res/img/ic-label.svg \
+  qt/globedex/res/img/ic-transaction-received.svg \
+  qt/globedex/res/img/dark/ic-transaction-received.svg \
+  qt/globedex/res/img/dark/ic-transaction-warning.svg \
+  qt/globedex/res/img/dark/ic-transaction-mint.svg \
+  qt/globedex/res/img/dark/ic-transaction-mint-inactive.svg \
+  qt/globedex/res/img/ic-transaction-received-inactive.svg \
+  qt/globedex/res/img/dark/ic-transaction-received-inactive.svg \
+  qt/globedex/res/img/img-welcome-step1.png \
+  qt/globedex/res/img/ic-check-connect.svg \
+  qt/globedex/res/img/ic-menu-hover.svg \
+  qt/globedex/res/img/ic-transaction-sent.svg \
+  qt/globedex/res/img/ic-transaction-sent-inactive.svg \
+  qt/globedex/res/img/dark/ic-transaction-sent.svg \
+  qt/globedex/res/img/dark/ic-transaction-sent-inactive.svg \
+  qt/globedex/res/img/img-welcome-step2.png \
+  qt/globedex/res/img/ic-check-dark.svg \
+  qt/globedex/res/img/ic-mint.svg \
+  qt/globedex/res/img/ic-transaction-staked.svg \
+  qt/globedex/res/img/ic-transaction-staked-inactive.svg \
+  qt/globedex/res/img/dark/ic-transaction-staked.svg \
+  qt/globedex/res/img/dark/ic-transaction-staked-inactive.svg \
+  qt/globedex/res/img/img-welcome-step3.png \
+  qt/globedex/res/img/ic-check-liliac-on.svg \
+  qt/globedex/res/img/ic-nav-address-active.svg \
+  qt/globedex/res/img/ic-unlock-staking.svg \
+  qt/globedex/res/img/img-welcome-step4.png \
+  qt/globedex/res/img/ic-check-locked-off.svg \
+  qt/globedex/res/img/ic-nav-address-hover.svg \
+  qt/globedex/res/img/ic-update-liliac.svg \
+  qt/globedex/res/img/ic-arrow-drop-down-purple.svg \
+  qt/globedex/res/img/ic-arrow-drop-up-purple.svg \
+  qt/globedex/res/img/ic-check-liliac-indeterminate.svg \
+  qt/globedex/res/img/ic-check-box-liliac-indeterminate.svg \
+  qt/globedex/res/img/ic-check-box-indeterminate.svg \
+  qt/globedex/res/img/ani-loading-dark.gif \
+  qt/globedex/res/img/ani-loading.gif
+
+
+
+BITCOIN_QT_BASE_CPP = \
+  qt/bantablemodel.cpp \
+  qt/bitcoinaddressvalidator.cpp \
+  qt/globedex/globedexgui.cpp \
+  qt/bitcoinunits.cpp \
+  qt/clientmodel.cpp \
+  qt/csvmodelwriter.cpp \
+  qt/guiutil.cpp \
+  qt/intro.cpp \
+  qt/networkstyle.cpp \
+  qt/notificator.cpp \
+  qt/optionsdialog.cpp \
+  qt/optionsmodel.cpp \
+  qt/peertablemodel.cpp \
+  qt/platformstyle.cpp \
+  qt/qvalidatedlineedit.cpp \
+  qt/qvaluecombobox.cpp \
+  qt/rpcconsole.cpp \
+  qt/trafficgraphwidget.cpp \
+  qt/utilitydialog.cpp
+
+BITCOIN_QT_WINDOWS_CPP = qt/winshutdownmonitor.cpp
+
+BITCOIN_QT_WALLET_CPP = \
+  qt/addressbookpage.cpp \
+  qt/addresstablemodel.cpp \
+  qt/askpassphrasedialog.cpp \
+  qt/coincontroldialog.cpp \
+  qt/coincontroltreewidget.cpp \
+  qt/editaddressdialog.cpp \
+  qt/openuridialog.cpp \
+  qt/paymentrequestplus.cpp \
+  qt/paymentserver.cpp \
+  qt/recentrequeststablemodel.cpp \
+  qt/transactionfilterproxy.cpp \
+  qt/transactionrecord.cpp \
+  qt/transactiontablemodel.cpp \
+  qt/walletmodel.cpp \
+  qt/walletmodeltransaction.cpp \
+  qt/globedex/loadingdialog.cpp \
+  qt/globedex/pwidget.cpp \
+  qt/globedex/focuseddialog.cpp \
+  qt/globedex/guitransactionsutils.cpp \
+  qt/globedex/snackbar.cpp \
+  qt/globedex/navmenuwidget.cpp \
+  qt/globedex/lockunlock.cpp \
+  qt/globedex/receivedialog.cpp \
+  qt/globedex/furabstractlistitemdelegate.cpp \
+  qt/globedex/txviewholder.cpp \
+  qt/globedex/qtutils.cpp \
+  qt/globedex/expandablebutton.cpp \
+  qt/globedex/privatelabel.cpp \
+  qt/globedex/topbar.cpp \
+  qt/globedex/txrow.cpp \
+  qt/globedex/addressholder.cpp \
+  qt/globedex/addressfilterproxymodel.cpp \
+  qt/globedex/dashboardwidget.cpp \
+  qt/globedex/addresslabelrow.cpp \
+  qt/globedex/contactdropdownrow.cpp \
+  qt/globedex/contactsdropdown.cpp \
+  qt/globedex/optionbutton.cpp \
+  qt/globedex/mninfodialog.cpp \
+  qt/globedex/mnmodel.cpp \
+  qt/globedex/masternodewizarddialog.cpp \
+  qt/globedex/mnrow.cpp \
+  qt/globedex/masternodeswidget.cpp \
+  qt/globedex/myaddressrow.cpp \
+  qt/globedex/sendchangeaddressdialog.cpp \
+  qt/globedex/sendconfirmdialog.cpp \
+  qt/globedex/sendcustomfeedialog.cpp \
+  qt/globedex/sendchangeaddressdialog.cpp \
+  qt/globedex/sendmultirow.cpp \
+  qt/globedex/send.cpp \
+  qt/globedex/addnewaddressdialog.cpp \
+  qt/globedex/addnewcontactdialog.cpp \
+  qt/globedex/requestdialog.cpp \
+  qt/globedex/receivewidget.cpp \
+  qt/globedex/tooltipmenu.cpp \
+  qt/globedex/addresseswidget.cpp \
+  qt/globedex/defaultdialog.cpp \
+  qt/globedex/settings/settingsbackupwallet.cpp \
+  qt/globedex/settings/settingsexportcsv.cpp \
+  qt/globedex/settings/settingsbittoolwidget.cpp \
+  qt/globedex/settings/settingsconsolewidget.cpp \
+  qt/globedex/settings/settingsdisplayoptionswidget.cpp \
+  qt/globedex/settings/settingsfaqwidget.cpp \
+  qt/globedex/settings/settingsinformationwidget.cpp \
+  qt/globedex/settings/settingsmainoptionswidget.cpp \
+  qt/globedex/settings/settingsmultisenddialog.cpp \
+  qt/globedex/settings/settingsmultisendwidget.cpp \
+  qt/globedex/settings/settingssignmessagewidgets.cpp \
+  qt/globedex/settings/settingswalletoptionswidget.cpp \
+  qt/globedex/settings/settingswalletrepairwidget.cpp \
+  qt/globedex/settings/settingswidget.cpp \
+  qt/globedex/welcomecontentwidget.cpp \
+  qt/globedex/splash.cpp
+
+
+BITCOIN_QT_CPP = $(BITCOIN_QT_BASE_CPP)
+if TARGET_WINDOWS
+BITCOIN_QT_CPP += $(BITCOIN_QT_WINDOWS_CPP)
+endif
+if ENABLE_WALLET
+BITCOIN_QT_CPP += $(BITCOIN_QT_WALLET_CPP)
+endif
+
+RES_IMAGES = \
+  qt/res/images/about.png \
+  qt/res/images/splash.png \
+  qt/res/images/splash_testnet.png \
+  qt/res/images/splash_regtest.png
+
+RES_CSS = \
+  qt/res/css/default.css \
+  qt/globedex/res/css/style_dark.css \
+  qt/globedex/res/css/style_light.css
+
+BITCOIN_RC = qt/res/globedex-qt-res.rc
+
+BITCOIN_QT_INCLUDES = -I$(builddir)/qt -I$(srcdir)/qt -I$(srcdir)/qt/forms \
+  -I$(builddir)/qt/forms -DQT_NO_KEYWORDS
+
+qt_libbitcoinqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+  $(QT_INCLUDES) $(QT_DBUS_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
+qt_libbitcoinqt_a_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_libbitcoinqt_a_OBJCXXFLAGS = $(AM_OBJCXXFLAGS) $(QT_PIE_FLAGS)
+
+qt_libbitcoinqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
+  $(QT_QRC) $(QT_QRC_LOCALE) $(QT_TS) $(PROTOBUF_PROTO) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS)
+
+nodist_qt_libbitcoinqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
+  $(PROTOBUF_H) $(QT_QRC_CPP) $(QT_QRC_LOCALE_CPP)
+
+# forms/foo.h -> forms/ui_foo.h
+QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:.ui=.h))))
+
+# Most files will depend on the forms and moc files as includes. Generate them
+# before anything else.
+$(QT_MOC): $(QT_FORMS_H)
+$(qt_libbitcoinqt_a_OBJECTS) $(qt_globedex_qt_OBJECTS) : | $(QT_MOC)
+
+#Generating these with a half-written protobuf header leads to wacky results.
+#This makes sure it's done.
+$(QT_MOC): $(PROTOBUF_H)
+$(QT_MOC_CPP): $(PROTOBUF_H)
+
+# globedex-qt binary #
+qt_globedex_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+  $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
+qt_globedex_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+
+qt_globedex_qt_SOURCES = qt/globedex.cpp
+if TARGET_DARWIN
+  qt_globedex_qt_SOURCES += $(BITCOIN_MM)
+endif
+if TARGET_WINDOWS
+  qt_globedex_qt_SOURCES += $(BITCOIN_RC)
+endif
+qt_globedex_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
+if ENABLE_WALLET
+qt_globedex_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
+endif
+if ENABLE_ZMQ
+qt_globedex_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+endif
+qt_globedex_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+  $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(SVG_LIBS) $(CHARTS_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
+  $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+qt_globedex_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_globedex_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
+
+#locale/foo.ts -> locale/foo.qm
+QT_QM=$(QT_TS:.ts=.qm)
+
+SECONDARY: $(QT_QM)
+
+$(srcdir)/qt/globedexstrings.cpp: $(libbitcoin_server_a_SOURCES) $(libbitcoin_wallet_a_SOURCES) $(libbitcoin_common_a_SOURCES) $(libbitcoin_zmq_a_SOURCES) $(libbitcoin_util_a_SOURCES)
+	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
+	$(AM_V_GEN) cd $(srcdir); XGETTEXT=$(XGETTEXT) PACKAGE_NAME="$(PACKAGE_NAME)" $(PYTHON) ../share/qt/extract_strings_qt.py $^
+
+translate: $(srcdir)/qt/globedexstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_BASE_CPP) qt/globedex.cpp $(BITCOIN_QT_WINDOWS_CPP) $(BITCOIN_QT_WALLET_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
+	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts $(srcdir)/qt/locale/globedex_en.ts
+
+$(QT_QRC_LOCALE_CPP): $(QT_QRC_LOCALE) $(QT_QM)
+	@test -f $(RCC)
+	@cp -f $< $(@D)/temp_$(<F)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name globedex_locale $(@D)/temp_$(<F) | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+	@rm $(@D)/temp_$(<F)
+
+$(QT_QRC_CPP): $(QT_QRC) $(QT_FORMS_H) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(PROTOBUF_H)
+	@test -f $(RCC)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name globedex $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno qt/temp_globedex_locale.qrc
+
+CLEANFILES += $(CLEAN_QT)
+
+globedex_qt_clean: FORCE
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_globedex_qt_OBJECTS) qt/globedex-qt$(EXEEXT) $(LIBBITCOINQT)
+
+globedex_qt : qt/globedex-qt$(EXEEXT)
+
+ui_%.h: %.ui
+	@test -f $(UIC)
+	@$(MKDIR_P) $(@D)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(UIC) -o $@ $< || (echo "Error creating $@"; false)
+
+%.moc: %.cpp
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(MOC) $(DEFAULT_INCLUDES) $(QT_INCLUDES) $(MOC_DEFS) $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+moc_%.cpp: %.h
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(MOC) $(DEFAULT_INCLUDES) $(QT_INCLUDES) $(MOC_DEFS) $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+%.qm: %.ts
+	@test -f $(LRELEASE)
+	@$(MKDIR_P) $(@D)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LRELEASE) -silent $< -qm $@

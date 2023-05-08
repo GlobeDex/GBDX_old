@@ -1,0 +1,81 @@
+policy_module(globedex, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type globedex_t;
+type globedex_exec_t;
+init_daemon_domain(globedex_t, globedex_exec_t)
+
+permissive globedex_t;
+
+type globedex_initrc_exec_t;
+init_script_file(globedex_initrc_exec_t)
+
+type globedex_conf_t;
+files_type(globedex_conf_t)
+
+type globedex_var_lib_t;
+files_type(globedex_var_lib_t)
+
+type globedex_var_run_t;
+files_type(globedex_var_run_t)
+
+type globedex_port_t;
+corenet_port(globedex_port_t)
+
+########################################
+#
+# globedex local policy
+#
+allow globedex_t self:process { fork };
+
+allow globedex_t self:fifo_file rw_fifo_file_perms;
+allow globedex_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(globedex_t, globedex_conf_t, globedex_conf_t)
+manage_files_pattern(globedex_t, globedex_conf_t, globedex_conf_t)
+
+manage_dirs_pattern(globedex_t, globedex_var_lib_t, globedex_var_lib_t)
+manage_files_pattern(globedex_t, globedex_var_lib_t, globedex_var_lib_t)
+files_var_lib_filetrans(globedex_t, globedex_var_lib_t, { dir file })
+
+manage_dirs_pattern(globedex_t, globedex_var_run_t, globedex_var_run_t)
+manage_files_pattern(globedex_t, globedex_var_run_t, globedex_var_run_t)
+
+sysnet_dns_name_resolve(globedex_t)
+corenet_all_recvfrom_unlabeled(globedex_t)
+
+allow globedex_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(globedex_t)
+corenet_tcp_sendrecv_generic_node(globedex_t)
+corenet_tcp_sendrecv_all_ports(globedex_t)
+corenet_tcp_bind_generic_node(globedex_t)
+
+gen_require(`
+    type globedex_port_t;
+')
+allow globedex_t globedex_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type globedex_port_t;
+')
+allow globedex_t globedex_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(globedex_t)
+
+files_read_etc_files(globedex_t)
+
+miscfiles_read_localization(globedex_t)
+
+sysnet_dns_name_resolve(globedex_t)
+
+allow globedex_t globedex_exec_t:file execute_no_trans;
+allow globedex_t self:process setsched;
+corecmd_exec_ls(globedex_t)
+corenet_tcp_connect_http_port(globedex_t)
+dev_read_urand(globedex_t)
+fs_getattr_xattr_fs(globedex_t)
+kernel_read_system_state(globedex_t)
